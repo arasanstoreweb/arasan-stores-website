@@ -13,16 +13,6 @@ import { useCallback, useEffect, useState } from 'react'
 
 // Hero Section
 function HeroSection() {
-  const [scrollOffset, setScrollOffset] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollOffset(window.scrollY * 0.3)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden 
     
@@ -32,41 +22,14 @@ function HeroSection() {
         <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
         <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
       </div>
-
-      {/* Decorative Chocolate Drip - Top */}
-      <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-16 opacity-10 animate-drip"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(139, 0, 0, 0.4) 0%, transparent 100%)',
-          clipPath: 'polygon(20% 0%, 30% 30%, 25% 50%, 35% 70%, 30% 100%, 45% 100%, 50% 70%, 55% 50%, 50% 30%, 60% 0%, 40% 0%)',
-        }}
-      />
-      
-      {/* Floating Candy Element 1 */}
-      <div 
-        className="absolute top-20 left-10 w-8 h-8 rounded-full bg-secondary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '0s' }}
-      />
-      
-      {/* Floating Candy Element 2 */}
-      <div 
-        className="absolute top-32 right-16 w-6 h-6 rounded-full bg-primary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '1s' }}
-      />
-      
-      {/* Floating Candy Element 3 */}
-      <div 
-        className="absolute bottom-40 right-20 w-7 h-7 rounded-full bg-secondary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '2s' }}
-      />
       
       <div className="container mx-auto px-4 pt-24 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
-<div className="mb-6 flex justify-center animate-logo-reveal">
+<div className="mb-6 flex justify-center">
     <img
-      src="/arasan-logo.png"
+      src="/logo.png"
       alt="Arasan Stores Logo"
       className="h-40 w-auto"
     />
@@ -118,7 +81,7 @@ function HeroSection() {
           </div>
           
           {/* Hero Image */}
-          <div className="relative animate-fade-in-up parallax-element" style={{ animationDelay: '0.2s', transform: `translateY(${scrollOffset}px)` }}>
+          <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="relative aspect-square max-w-lg mx-auto">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
               <Image
