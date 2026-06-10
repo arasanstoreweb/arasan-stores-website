@@ -56,12 +56,9 @@ export function Header() {
             <div className="h-12 w-0.5 bg-primary/30"></div>
             
             {/* Text Heading */}
-            <Link href="/" className="flex flex-col gap-0">
-              <span className="text-xl md:text-2xl font-serif font-bold text-primary tracking-wide leading-tight">
-                Arasan
-              </span>
-              <span className="text-xl md:text-2xl font-serif font-bold text-primary tracking-wide leading-tight">
-                Stores
+            <Link href="/" className="flex items-center">
+              <span className="text-lg md:text-xl font-serif font-bold text-primary tracking-wide">
+                Arasan Stores
               </span>
             </Link>
           </div>
