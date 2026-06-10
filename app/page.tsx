@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, Star, ShoppingBag, Gift, Truck, Award, Heart, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { ChocolateDrip } from '@/components/chocolate-drip'
 import { products, categories, reviews } from '@/lib/data'
 import { useCart } from '@/lib/cart-context'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -14,7 +15,6 @@ import { useCallback, useEffect, useState } from 'react'
 // Hero Section
 function HeroSection() {
   const [scrollOffset, setScrollOffset] = useState(0)
-  const [chocolates, setChocolates] = useState([])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,172 +24,98 @@ function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Generate chocolate popping animation on mount
-  useEffect(() => {
-    const generateChocolates = () => {
-      const newChocolates = []
-      for (let i = 0; i < 8; i++) {
-        const angle = (i / 8) * Math.PI * 2
-        const distance = 150
-        const tx = Math.cos(angle) * distance
-        const ty = Math.sin(angle) * distance
-        const size = Math.random() * 12 + 8
-        const delay = Math.random() * 0.3
-        
-        newChocolates.push({
-          id: i,
-          tx,
-          ty,
-          size,
-          delay,
-          color: ['bg-amber-900', 'bg-amber-800', 'bg-amber-700', 'bg-yellow-700'][Math.floor(Math.random() * 4)]
-        })
-      }
-      setChocolates(newChocolates)
-    }
-
-    const timer = setTimeout(generateChocolates, 500)
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden 
-    
-    bg-gradient-to-br from-primary/5 via-background to-secondary/10">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
-      </div>
+    <>
+      {/* Chocolate Drip with Logo */}
+      <ChocolateDrip />
 
-      {/* Decorative Chocolate Drip - Top */}
-      <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-16 opacity-10 animate-drip"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(139, 0, 0, 0.4) 0%, transparent 100%)',
-          clipPath: 'polygon(20% 0%, 30% 30%, 25% 50%, 35% 70%, 30% 100%, 45% 100%, 50% 70%, 55% 50%, 50% 30%, 60% 0%, 40% 0%)',
-        }}
-      />
-      
-      {/* Floating Candy Element 1 */}
-      <div 
-        className="absolute top-20 left-10 w-8 h-8 rounded-full bg-secondary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '0s' }}
-      />
-      
-      {/* Floating Candy Element 2 */}
-      <div 
-        className="absolute top-32 right-16 w-6 h-6 rounded-full bg-primary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '1s' }}
-      />
-      
-      {/* Floating Candy Element 3 */}
-      <div 
-        className="absolute bottom-40 right-20 w-7 h-7 rounded-full bg-secondary opacity-0 animate-floating-candy"
-        style={{ animationDelay: '2s' }}
-      />
-      
-      <div className="container mx-auto px-4 pt-24 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
-<div className="mb-6 flex justify-center animate-logo-reveal relative">
-    <img
-      src="/arasan-logo.png"
-      alt="Arasan Stores Logo"
-      className="h-40 w-auto"
-    />
-    {/* Chocolate popping animation container */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      {chocolates.map((chocolate) => (
-        <div
-          key={chocolate.id}
-          className={`absolute rounded-full ${chocolate.color} animate-chocolate-pop`}
-          style={{
-            width: chocolate.size,
-            height: chocolate.size,
-            '--tx': `${chocolate.tx}px`,
-            '--ty': `${chocolate.ty}px`,
-            animationDelay: `${chocolate.delay}s`,
-          } as React.CSSProperties}
-        />
-      ))}
-    </div>
-  </div>
-            <div className="flex justify-center lg:justify-start w-full">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">
-                <span>Your One Stop Shop For Confectioneries</span>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/10 pt-12">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-4 pb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
+              <div className="flex justify-center lg:justify-start w-full">
+                <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">
+                  <span>Your One Stop Shop For Confectioneries</span>
+                </div>
+              </div>
+             
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-foreground leading-tight">
+                <span className="text-balance">Crafting Sweet Moments</span>
+                <span className="block text-primary">Since Generations</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Discover our exquisite collection of handcrafted chocolates and traditional Indian sweets, made with love and the finest ingredients.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="/products">
+                  <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
+                    Shop Now
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/categories">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium transition-all">
+                    Browse Categories
+                  </Button>
+                </Link>
+              </div>
+              
+              {/* Trust Badges */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Globe className="h-5 w-5 text-secondary" />
+                  <span className="text-sm">All Over India</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Award className="h-5 w-5 text-secondary" />
+                  <span className="text-sm">Premium Quality</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Gift className="h-5 w-5 text-secondary" />
+                  <span className="text-sm">Gift Wrapping</span>
+                </div>
               </div>
             </div>
-           
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-foreground leading-tight">
-              <span className="text-balance">Crafting Sweet Moments</span>
-              <span className="block text-primary">Since Generations</span>
-            </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Discover our exquisite collection of handcrafted chocolates and traditional Indian sweets, made with love and the finest ingredients.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link href="/products">
-                <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
-                  Shop Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/categories">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium transition-all">
-                  Browse Categories
-                </Button>
-              </Link>
-            </div>
-            
-            {/* Trust Badges */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Globe className="h-5 w-5 text-secondary" />
-                <span className="text-sm">All Over India</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Award className="h-5 w-5 text-secondary" />
-                <span className="text-sm">Premium Quality</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Gift className="h-5 w-5 text-secondary" />
-                <span className="text-sm">Gift Wrapping</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Hero Image */}
-          <div className="relative animate-fade-in-up parallax-element" style={{ animationDelay: '0.2s', transform: `translateY(${scrollOffset}px)` }}>
-            <div className="relative aspect-square max-w-lg mx-auto">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
-              <Image
-                src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&h=800&fit=crop"
-                alt="Premium chocolates"
-                fill
-                className="object-cover rounded-3xl shadow-2xl"
-                priority
-              />
-              {/* Floating Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
-                    <Star className="h-6 w-6 text-secondary fill-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-serif font-bold text-lg">4.9/5</p>
-                    <p className="text-sm text-muted-foreground">500+ Reviews</p>
+            {/* Hero Image */}
+            <div className="relative animate-fade-in-up parallax-element" style={{ animationDelay: '0.2s', transform: `translateY(${scrollOffset}px)` }}>
+              <div className="relative aspect-square max-w-lg mx-auto">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
+                <Image
+                  src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&h=800&fit=crop"
+                  alt="Premium chocolates"
+                  fill
+                  className="object-cover rounded-3xl shadow-2xl"
+                  priority
+                />
+                {/* Floating Badge */}
+                <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                      <Star className="h-6 w-6 text-secondary fill-secondary" />
+                    </div>
+                    <div>
+                      <p className="font-serif font-bold text-lg">4.9/5</p>
+                      <p className="text-sm text-muted-foreground">500+ Reviews</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 
