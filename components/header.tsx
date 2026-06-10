@@ -33,31 +33,31 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-lg py-3" 
-          : "bg-transparent py-5"
+          ? "bg-background/95 backdrop-blur-md shadow-lg py-2" 
+          : "bg-transparent py-3"
       )}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center gap-3">
-            {/* Logo Image */}
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* Logo Image - Reduced by 30% */}
             <Link href="/" className="flex items-center">
               <Image 
                 src="/arasan-logo.png" 
                 alt="Arasan Stores Logo" 
-                width={56}
-                height={56}
-                className="h-14 w-14 object-contain"
+                width={39}
+                height={39}
+                className="h-9 md:h-10 w-9 md:w-10 object-contain"
               />
             </Link>
             
-            {/* Divider Line */}
-            <div className="h-12 w-0.5 bg-primary/30"></div>
+            {/* Divider Line - Reduced proportionally */}
+            <div className="h-8 md:h-9 w-0.5 bg-primary/30"></div>
             
-            {/* Text Heading */}
+            {/* Text Heading - Increased by 30% */}
             <Link href="/" className="flex items-center">
-              <span className="text-lg md:text-xl font-serif font-bold text-primary tracking-wide">
+              <span className="text-xl md:text-2xl font-serif font-bold text-primary tracking-wide">
                 Arasan Stores
               </span>
             </Link>

@@ -27,13 +27,13 @@ function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
-<div className="mb-6 flex justify-center">
-    <img
-      src="/logo.png"
-      alt="Arasan Stores Logo"
-      className="h-40 w-auto"
-    />
-  </div>
+            <div className="mb-6 flex justify-center animate-smooth-scale">
+              <img
+                src="/arasan-logo.png"
+                alt="Arasan Stores Logo"
+                className="h-32 md:h-40 w-auto"
+              />
+            </div>
             <div className="flex justify-center lg:justify-start w-full">
               <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">
                 <span>Your One Stop Shop For Confectioneries</span>
