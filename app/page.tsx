@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { ArrowRight, Star, ShoppingBag, Gift, Truck, Award, Heart, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ChocolateDrip } from '@/components/chocolate-drip'
 import { products, categories, reviews } from '@/lib/data'
 import { useCart } from '@/lib/cart-context'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -14,108 +13,101 @@ import { useCallback, useEffect, useState } from 'react'
 
 // Hero Section
 function HeroSection() {
-  const [scrollOffset, setScrollOffset] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollOffset(window.scrollY * 0.3)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
-    <>
-      {/* Chocolate Drip with Logo */}
-      <ChocolateDrip />
-
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/10 pt-12">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
-        </div>
-        
-        <div className="container mx-auto px-4 pb-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Content */}
-            <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
-              <div className="flex justify-center lg:justify-start w-full">
-                <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">
-                  <span>Your One Stop Shop For Confectioneries</span>
-                </div>
-              </div>
-             
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-foreground leading-tight">
-                <span className="text-balance">Crafting Sweet Moments</span>
-                <span className="block text-primary">Since Generations</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Discover our exquisite collection of handcrafted chocolates and traditional Indian sweets, made with love and the finest ingredients.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/products">
-                  <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
-                    Shop Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/categories">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium transition-all">
-                    Browse Categories
-                  </Button>
-                </Link>
-              </div>
-              
-              {/* Trust Badges */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Globe className="h-5 w-5 text-secondary" />
-                  <span className="text-sm">All Over India</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Award className="h-5 w-5 text-secondary" />
-                  <span className="text-sm">Premium Quality</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Gift className="h-5 w-5 text-secondary" />
-                  <span className="text-sm">Gift Wrapping</span>
-                </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden 
+    
+    bg-gradient-to-br from-primary/5 via-background to-secondary/10">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 pt-24 pb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
+          <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
+<div className="mb-6 flex justify-center">
+    <img
+      src="/logo.png"
+      alt="Arasan Stores Logo"
+      className="h-40 w-auto"
+    />
+  </div>
+            <div className="flex justify-center lg:justify-start w-full">
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">
+                <span>Your One Stop Shop For Confectioneries</span>
               </div>
             </div>
+           
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-foreground leading-tight">
+              <span className="text-balance">Crafting Sweet Moments</span>
+              <span className="block text-primary">Since Generations</span>
+            </h1>
             
-            {/* Hero Image */}
-            <div className="relative animate-fade-in-up parallax-element" style={{ animationDelay: '0.2s', transform: `translateY(${scrollOffset}px)` }}>
-              <div className="relative aspect-square max-w-lg mx-auto">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
-                <Image
-                  src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&h=800&fit=crop"
-                  alt="Premium chocolates"
-                  fill
-                  className="object-cover rounded-3xl shadow-2xl"
-                  priority
-                />
-                {/* Floating Badge */}
-                <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
-                      <Star className="h-6 w-6 text-secondary fill-secondary" />
-                    </div>
-                    <div>
-                      <p className="font-serif font-bold text-lg">4.9/5</p>
-                      <p className="text-sm text-muted-foreground">500+ Reviews</p>
-                    </div>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Discover our exquisite collection of handcrafted chocolates and traditional Indian sweets, made with love and the finest ingredients.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Link href="/products">
+                <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
+                  Shop Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/categories">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium transition-all">
+                  Browse Categories
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Trust Badges */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Globe className="h-5 w-5 text-secondary" />
+                <span className="text-sm">All Over India</span>
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Award className="h-5 w-5 text-secondary" />
+                <span className="text-sm">Premium Quality</span>
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Gift className="h-5 w-5 text-secondary" />
+                <span className="text-sm">Gift Wrapping</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Hero Image */}
+          <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="relative aspect-square max-w-lg mx-auto">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
+              <Image
+                src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&h=800&fit=crop"
+                alt="Premium chocolates"
+                fill
+                className="object-cover rounded-3xl shadow-2xl"
+                priority
+              />
+              {/* Floating Badge */}
+              <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+                    <Star className="h-6 w-6 text-secondary fill-secondary" />
+                  </div>
+                  <div>
+                    <p className="font-serif font-bold text-lg">4.9/5</p>
+                    <p className="text-sm text-muted-foreground">500+ Reviews</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
 
