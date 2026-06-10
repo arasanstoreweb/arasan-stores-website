@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Star, ShoppingBag, Gift, Truck, Award, Heart, Globe } from 'lucide-react'
+import { ArrowRight, Star, ShoppingBag, Gift, Truck, Award, Heart, Globe, MessageCircle, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { products, categories, reviews } from '@/lib/data'
@@ -50,12 +50,12 @@ function HeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link href="/products">
-                <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
-                  Shop Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+              <a href="https://wa.me/919994897722?text=Hi%20Arasan%20Stores%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-primary-foreground px-8 py-6 text-lg font-medium shadow-lg shadow-green-600/25 transition-all hover:shadow-xl hover:shadow-green-600/30">
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Contact Now
                 </Button>
-              </Link>
+              </a>
               <Link href="/categories">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium transition-all">
                   Browse Categories
@@ -92,7 +92,7 @@ function HeroSection() {
                 priority
               />
               {/* Floating Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
+              <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float hidden">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
                     <Star className="h-6 w-6 text-secondary fill-secondary" />
@@ -190,13 +190,15 @@ function ProductCard({ product, onAddToCart }: { product: typeof products[0], on
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute bottom-4 left-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-          <Button 
-            onClick={(e) => { e.preventDefault(); onAddToCart(); }}
-            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
-            <ShoppingBag className="h-4 w-4 mr-2" />
-            Add to Cart
-          </Button>
+          <Link href="/checkout" className="flex-1">
+            <Button 
+              onClick={(e) => { e.preventDefault(); }}
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              <ShoppingBag className="h-4 w-4 mr-2" />
+              Buy Now
+            </Button>
+          </Link>
           <Button variant="secondary" size="icon" className="bg-card/90 hover:bg-card">
             <Heart className="h-4 w-4" />
           </Button>
@@ -278,12 +280,12 @@ function CategoriesPreview() {
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2">
           {categories.slice(0, 6).map((category, index) => (
             <Link 
               key={category.id} 
               href={`/categories/${category.slug}`}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl"
+              className="group relative aspect-[4/3] overflow-hidden rounded-xl"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <Image
@@ -293,14 +295,14 @@ function CategoriesPreview() {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-2">
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <h3 className="text-lg md:text-xl font-serif font-bold text-white mb-1">
                   {category.name}
                 </h3>
-                <p className="text-white/80 text-sm mb-3">{category.description}</p>
-                <span className="inline-flex items-center text-secondary font-medium text-sm group-hover:gap-2 transition-all">
+                <p className="text-white/80 text-xs mb-2">{category.description}</p>
+                <span className="inline-flex items-center text-secondary font-medium text-xs group-hover:gap-2 transition-all">
                   Explore Collection
-                  <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
             </Link>
@@ -365,73 +367,82 @@ function WhyChooseUs() {
   )
 }
 
-// Testimonials
-function Testimonials() {
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })])
+// Our Location Section
+function OurLocation() {
+  const latitude = 8.7408;
+  const longitude = 77.7055;
+  const shopName = "Arasan Stores";
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <span className="text-secondary font-medium tracking-widest uppercase text-sm">Testimonials</span>
+          <span className="text-secondary font-medium tracking-widest uppercase text-sm">Visit Us</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mt-2">
-            What Our Customers Say
+            Our Location
           </h2>
+          <p className="text-muted-foreground mt-4">Find us on the map or visit our store</p>
         </div>
         
-        <div className="overflow-hidden max-w-4xl mx-auto" ref={emblaRef}>
-          <div className="flex">
-            {reviews.map((review) => (
-              <div key={review.id} className="flex-none w-full px-4">
-                <Card className="bg-card border-0 shadow-lg p-8 text-center">
-                  <div className="flex justify-center gap-1 mb-4">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`h-5 w-5 ${i < review.rating ? 'text-secondary fill-secondary' : 'text-muted'}`} 
-                      />
-                    ))}
-                  </div>
-                  <p className="text-lg md:text-xl text-foreground italic leading-relaxed mb-6">
-                    {`"${review.comment}"`}
-                  </p>
-                  <div>
-                    <p className="font-serif font-semibold text-foreground">{review.author}</p>
-                    {review.verified && (
-                      <span className="text-sm text-secondary">Verified Buyer</span>
-                    )}
-                  </div>
-                </Card>
-              </div>
-            ))}
-          </div>
+        <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.0477246624856!2d77.70549!3d8.740848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b04f3c8e8e8e8e9%3A0x8e8e8e8e8e8e8e8e!2sArasan%20Stores!5e0!3m2!1sen!2sin!4v1234567890"
+            width="100%"
+            height="400"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full"
+          ></iframe>
+        </div>
+
+        <div className="text-center mt-8">
+          <a 
+            href={mapsUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block"
+          >
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <MapPin className="mr-2 h-5 w-5" />
+              View on Google Maps
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
         </div>
       </div>
     </section>
   )
 }
 
-// Special Offer Banner
+// Special Offer Banner - Order on WhatsApp
 function SpecialOffer() {
+  const whatsappNumber = "919994897722";
+  const message = "Hi Arasan Stores, I'd like to place an order!";
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
   return (
-    <section className="py-16 bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20">
+    <section className="py-16 bg-gradient-to-r from-green-50 via-green-25 to-green-50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           <div>
-            <span className="text-primary font-bold text-sm tracking-widest uppercase">Limited Time Offer</span>
+            <span className="text-green-600 font-bold text-sm tracking-widest uppercase">Order Now</span>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground mt-2">
-              Get 20% Off Your First Order
+              Order on WhatsApp
             </h2>
             <p className="text-muted-foreground mt-2">
-              Use code <span className="font-bold text-primary">SWEET20</span> at checkout
+              Connect with us directly via WhatsApp for instant support and quick ordering
             </p>
           </div>
-          <Link href="/products">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 shadow-lg">
-              Shop Now
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 shadow-lg">
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Contact Now
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </section>
@@ -493,7 +504,7 @@ export default function HomePage() {
       <BestSellers />
       <WhyChooseUs />
       <SpecialOffer />
-      <Testimonials />
+      <OurLocation />
       <InstagramGallery />
     </>
   )
