@@ -14,6 +14,7 @@ import { useCallback, useEffect, useState } from 'react'
 // Hero Section
 function HeroSection() {
   const [scrollOffset, setScrollOffset] = useState(0)
+  const [chocolates, setChocolates] = useState([])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +22,34 @@ function HeroSection() {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Generate chocolate popping animation on mount
+  useEffect(() => {
+    const generateChocolates = () => {
+      const newChocolates = []
+      for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2
+        const distance = 150
+        const tx = Math.cos(angle) * distance
+        const ty = Math.sin(angle) * distance
+        const size = Math.random() * 12 + 8
+        const delay = Math.random() * 0.3
+        
+        newChocolates.push({
+          id: i,
+          tx,
+          ty,
+          size,
+          delay,
+          color: ['bg-amber-900', 'bg-amber-800', 'bg-amber-700', 'bg-yellow-700'][Math.floor(Math.random() * 4)]
+        })
+      }
+      setChocolates(newChocolates)
+    }
+
+    const timer = setTimeout(generateChocolates, 500)
+    return () => clearTimeout(timer)
   }, [])
 
   return (
@@ -64,12 +93,28 @@ function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
-<div className="mb-6 flex justify-center animate-logo-reveal">
+<div className="mb-6 flex justify-center animate-logo-reveal relative">
     <img
       src="/arasan-logo.png"
       alt="Arasan Stores Logo"
       className="h-40 w-auto"
     />
+    {/* Chocolate popping animation container */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      {chocolates.map((chocolate) => (
+        <div
+          key={chocolate.id}
+          className={`absolute rounded-full ${chocolate.color} animate-chocolate-pop`}
+          style={{
+            width: chocolate.size,
+            height: chocolate.size,
+            '--tx': `${chocolate.tx}px`,
+            '--ty': `${chocolate.ty}px`,
+            animationDelay: `${chocolate.delay}s`,
+          } as React.CSSProperties}
+        />
+      ))}
+    </div>
   </div>
             <div className="flex justify-center lg:justify-start w-full">
               <div className="inline-flex items-center px-6 py-3 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium animate-pulse">

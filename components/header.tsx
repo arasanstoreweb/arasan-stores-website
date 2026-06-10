@@ -46,18 +46,18 @@ export function Header() {
               <Image 
                 src="/arasan-logo.png" 
                 alt="Arasan Stores Logo" 
-                width={56}
-                height={56}
-                className="h-14 w-14 object-contain"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
               />
             </Link>
             
             {/* Divider Line */}
-            <div className="h-12 w-0.5 bg-primary/30"></div>
+            <div className="h-10 w-0.5 bg-primary/30"></div>
             
             {/* Text Heading */}
             <Link href="/" className="flex items-center">
-              <span className="text-lg md:text-xl font-serif font-bold text-primary tracking-wide">
+              <span className="text-2xl md:text-3xl font-serif font-bold text-primary tracking-wide">
                 Arasan Stores
               </span>
             </Link>

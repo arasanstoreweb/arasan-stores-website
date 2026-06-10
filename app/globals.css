@@ -258,6 +258,26 @@
   will-change: transform;
 }
 
+/* Chocolate popping animation from center */
+@keyframes chocolate-pop {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(1);
+  }
+}
+
+.animate-chocolate-pop {
+  animation: chocolate-pop 1.2s ease-out forwards;
+  pointer-events: none;
+}
+
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
