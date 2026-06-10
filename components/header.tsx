@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Menu, X, ShoppingBag, Heart } from 'lucide-react'
@@ -38,15 +39,32 @@ export function Header() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-baseline gap-1">
-            <span className="text-2xl md:text-3xl font-serif font-bold text-primary tracking-wide">
-              Arasan
-            </span>
-            <span className="text-2xl md:text-3xl font-serif font-bold text-primary tracking-wide">
-              Stores
-            </span>
-          </Link>
+          {/* Logo Section */}
+          <div className="flex items-center gap-3">
+            {/* Logo Image */}
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/arasan-logo.png" 
+                alt="Arasan Stores Logo" 
+                width={56}
+                height={56}
+                className="h-14 w-14 object-contain"
+              />
+            </Link>
+            
+            {/* Divider Line */}
+            <div className="h-12 w-0.5 bg-primary/30"></div>
+            
+            {/* Text Heading */}
+            <Link href="/" className="flex flex-col gap-0">
+              <span className="text-xl md:text-2xl font-serif font-bold text-primary tracking-wide leading-tight">
+                Arasan
+              </span>
+              <span className="text-xl md:text-2xl font-serif font-bold text-primary tracking-wide leading-tight">
+                Stores
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
