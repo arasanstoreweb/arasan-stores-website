@@ -7,9 +7,12 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { products, categories, reviews } from '@/lib/data'
 import { useCart } from '@/lib/cart-context'
+import { useWishlist } from '@/lib/wishlist-context'
+import { useToast } from '@/hooks/use-toast'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useCallback, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 // Hero Section
 function HeroSection() {
@@ -22,8 +25,11 @@ function HeroSection() {
         <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-primary blur-3xl" />
         <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
       </div>
-      
-      <div className="container mx-auto px-4 pt-24 pb-16">
+      {/* Floating Chocolates */}
+<div className="absolute inset-0 pointer-events-none overflow-hidden">
+ 
+</div>
+      <div className="container mx-auto px-4 pt-24 pb-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
@@ -46,7 +52,7 @@ function HeroSection() {
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Discover our exquisite collection of handcrafted chocolates and traditional Indian sweets, made with love and the finest ingredients.
+              Discover our exquisite collection of premium chocolates, nostalgic snacks, and joyful sweet treats made with love and the finest ingredients.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -65,46 +71,23 @@ function HeroSection() {
             
             {/* Trust Badges */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4">
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-muted-foreground transition-all duration-300 ease-out hover:text-foreground hover:scale-105">
                 <Globe className="h-5 w-5 text-secondary" />
                 <span className="text-sm">All Over India</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-muted-foreground transition-all duration-300 ease-out hover:text-foreground hover:scale-105">
                 <Award className="h-5 w-5 text-secondary" />
-                <span className="text-sm">Premium Quality</span>
+                <span className="text-sm">Best Price</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-muted-foreground transition-all duration-300 ease-out hover:text-foreground hover:scale-105">
                 <Gift className="h-5 w-5 text-secondary" />
-                <span className="text-sm">Gift Wrapping</span>
+                <span className="text-sm">Safe Packaging</span>
               </div>
             </div>
           </div>
           
           {/* Hero Image */}
-          <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="relative aspect-square max-w-lg mx-auto">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/30 to-primary/20 blur-2xl" />
-              <Image
-                src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&h=800&fit=crop"
-                alt="Premium chocolates"
-                fill
-                className="object-cover rounded-3xl shadow-2xl"
-                priority
-              />
-              {/* Floating Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-card p-4 rounded-2xl shadow-xl animate-float">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
-                    <Star className="h-6 w-6 text-secondary fill-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-serif font-bold text-lg">4.9/5</p>
-                    <p className="text-sm text-muted-foreground">500+ Reviews</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -115,6 +98,7 @@ function HeroSection() {
 function FeaturedProducts() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' }, [Autoplay({ delay: 4000 })])
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const router = useRouter()
   const { addItem } = useCart()
   
   const featuredProducts = products.filter(p => p.featured)
@@ -127,7 +111,7 @@ function FeaturedProducts() {
   }, [emblaApi])
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-14 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <span className="text-secondary font-medium tracking-widest uppercase text-sm">Curated Selection</span>
@@ -143,7 +127,14 @@ function FeaturedProducts() {
           <div className="flex gap-6">
             {featuredProducts.map((product) => (
               <div key={product.id} className="flex-none w-[280px] md:w-[320px]">
-                <ProductCard product={product} onAddToCart={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })} />
+                <ProductCard
+                  product={product}
+                  showDetails={false}
+                  onAddToCart={() => {
+                    addItem({ id: product.id, name: product.name, price: product.price, image: product.image })
+                    router.push('/cart')
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -168,7 +159,11 @@ function FeaturedProducts() {
 }
 
 // Product Card Component
-function ProductCard({ product, onAddToCart }: { product: typeof products[0], onAddToCart: () => void }) {
+function ProductCard({ product, onAddToCart, showDetails = true }: { product: typeof products[0], onAddToCart: () => void, showDetails?: boolean }) {
+  const { hasItem, toggleItem } = useWishlist()
+  const { toast } = useToast()
+  const isWishlisted = hasItem(product.id)
+
   return (
     <Card className="group overflow-hidden bg-card border-0 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="relative aspect-square overflow-hidden">
@@ -197,33 +192,55 @@ function ProductCard({ product, onAddToCart }: { product: typeof products[0], on
             <ShoppingBag className="h-4 w-4 mr-2" />
             Add to Cart
           </Button>
-          <Button variant="secondary" size="icon" className="bg-card/90 hover:bg-card">
-            <Heart className="h-4 w-4" />
+          <Button
+            onClick={() => {
+              const nextWishlisted = !isWishlisted
+              toggleItem({ id: product.id, name: product.name, image: product.image, price: product.price })
+              if (nextWishlisted) {
+                toast({
+                  title: 'Added to wishlist',
+                  description: `${product.name} has been added to your wishlist.`,
+                })
+              }
+            }}
+            variant="secondary"
+            size="icon"
+            className="rounded-full bg-card/90 text-foreground hover:bg-card/95 transition-colors duration-200"
+            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart
+              className={`h-4 w-4 ${isWishlisted ? 'text-destructive' : 'text-secondary'}`}
+              fill={isWishlisted ? 'currentColor' : 'none'}
+            />
           </Button>
         </div>
       </div>
       <CardContent className="p-5">
-        <div className="flex items-center gap-1 mb-2">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star 
-              key={i} 
-              className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-secondary fill-secondary' : 'text-muted'}`} 
-            />
-          ))}
-          <span className="text-sm text-muted-foreground ml-1">({product.reviews})</span>
-        </div>
+        {showDetails && (
+          <div className="flex items-center gap-1 mb-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star 
+                key={i} 
+                className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-secondary fill-secondary' : 'text-muted'}`} 
+              />
+            ))}
+            <span className="text-sm text-muted-foreground ml-1">({product.reviews})</span>
+          </div>
+        )}
         <Link href={`/products/${product.id}`}>
           <h3 className="font-serif font-semibold text-lg text-foreground hover:text-primary transition-colors line-clamp-1">
             {product.name}
           </h3>
         </Link>
         <p className="text-muted-foreground text-sm mt-1 line-clamp-2">{product.description}</p>
-        <div className="flex items-center gap-2 mt-3">
-          <span className="text-xl font-bold text-primary">&#8377;{product.price}</span>
-          {product.originalPrice && (
-            <span className="text-sm text-muted-foreground line-through">&#8377;{product.originalPrice}</span>
-          )}
-        </div>
+        {showDetails && (
+          <div className="flex items-center gap-2 mt-3">
+            <span className="text-xl font-bold text-primary">&#8377;{product.price}</span>
+            {product.originalPrice && (
+              <span className="text-sm text-muted-foreground line-through">&#8377;{product.originalPrice}</span>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   )
@@ -279,7 +296,7 @@ function CategoriesPreview() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.slice(0, 6).map((category, index) => (
+          {categories.map((category, index) => (
             <Link 
               key={category.id} 
               href={`/categories/${category.slug}`}
@@ -411,27 +428,53 @@ function Testimonials() {
   )
 }
 
-// Special Offer Banner
+// Shop Location Map Section
 function SpecialOffer() {
+  const mapQuery = 'ARASAN+STORES+-+MITTAI+KADAI'
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`
+  const embedUrl = `https://www.google.com/maps?q=${mapQuery}&z=18&output=embed`
+
   return (
     <section className="py-16 bg-gradient-to-r from-secondary/20 via-secondary/10 to-secondary/20">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
           <div>
-            <span className="text-primary font-bold text-sm tracking-widest uppercase">Limited Time Offer</span>
+            <span className="text-primary font-bold text-sm tracking-widest uppercase">Visit Our Store</span>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground mt-2">
-              Get 20% Off Your First Order
+              Find ARASAN STORES - MITTAI KADAI on Google Maps
             </h2>
-            <p className="text-muted-foreground mt-2">
-              Use code <span className="font-bold text-primary">SWEET20</span> at checkout
+            <p className="text-muted-foreground mt-2 max-w-xl">
+              Tap the embedded map to open our shop location in Google Maps and get directions instantly.
             </p>
+            <a
+              href={mapUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 mt-6 rounded-lg bg-primary px-8 py-4 text-sm font-medium text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+            >
+              Open in Google Maps
+              <ArrowRight className="h-5 w-5" />
+            </a>
           </div>
-          <Link href="/products">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 shadow-lg">
-              Shop Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
+
+          <a href={mapUrl} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-3xl border border-border bg-card shadow-xl transition-transform hover:-translate-y-1">
+            <div className="relative aspect-video">
+              <iframe
+                src={embedUrl}
+                title="Arasan Stores - Mittai Kadai Map"
+                className="h-full w-full border-0"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <div className="p-6">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Our Location</p>
+              <p className="mt-3 text-xl font-semibold text-foreground">ARASAN STORES - MITTAI KADAI</p>
+              <p className="mt-2 text-muted-foreground">
+                Click the embed to open the shop location in Google Maps and start navigating.
+              </p>
+            </div>
+          </a>
         </div>
       </div>
     </section>

@@ -77,7 +77,7 @@ export default function AboutPage() {
               Crafting Sweet Moments Since 2009
             </h1>
             <p className="text-white/80 mt-6 text-lg leading-relaxed">
-              For nearly four decades, Arasan Stores has been synonymous with premium quality chocolates and traditional Indian sweets. Our journey began with a simple dream - to bring joy to people through the art of confectionery.
+              For nearly four decades, Arasan Stores has been synonymous with premium quality chocolates, nostalgic snacks, and timeless sweet treats. Our journey began with a simple dream - to bring joy to people through the art of confectionery.
             </p>
           </div>
         </div>

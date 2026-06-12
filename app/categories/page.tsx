@@ -5,7 +5,7 @@ import { categories } from '@/lib/data'
 
 export const metadata = {
   title: 'Categories | Arasan Stores',
-  description: 'Browse our collection of premium chocolates, traditional Indian sweets, gift boxes, and festival specials.',
+  description: 'Browse our collection of premium chocolates, traditional snacks, jellies, wafers, biscuits, toys, and nostalgic treats.',
 }
 
 export default function CategoriesPage() {
@@ -19,7 +19,7 @@ export default function CategoriesPage() {
             Our Collections
           </h1>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-            From rich Belgian chocolates to traditional Indian sweets, discover the perfect treat for every occasion.
+            From premium chocolates to nostalgic snacks and playful treats, explore the collections that satisfy every craving.
           </p>
         </div>
       </section>
@@ -71,13 +71,13 @@ export default function CategoriesPage() {
             Can&apos;t Decide?
           </h2>
           <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-            Try our curated gift boxes featuring the best of each collection, perfect for gifting or treating yourself.
+            Discover our curated collections of chocolates, snacks, and treats for every celebration, perfect for gifting or enjoying at home.
           </p>
           <Link 
-            href="/categories/gift-boxes"
+            href="/categories/chocolates"
             className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-lg font-medium hover:bg-secondary/90 transition-colors"
           >
-            Explore Gift Boxes
+            Explore Chocolates
             <ArrowRight className="h-5 w-5" />
           </Link>
         </div>

@@ -66,13 +66,21 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-serif font-semibold mb-6 text-secondary">Categories</h3>
             <ul className="space-y-3">
-              {['Chocolates', 'Indian Sweets', 'Gift Boxes', 'Festival Specials', 'Dry Fruit Sweets'].map((item) => (
-                <li key={item}>
+              {[
+                { name: 'Chocolates', slug: 'chocolates' },
+                { name: 'Traditional Snacks', slug: 'traditional-snacks' },
+                { name: "90's Kid's", slug: '90s-kids' },
+                { name: 'Wafers', slug: 'wafers' },
+                { name: 'Jellies', slug: 'jellies' },
+                { name: 'Biscuits', slug: 'biscuits' },
+                { name: 'Toys', slug: 'toys' },
+              ].map((item) => (
+                <li key={item.slug}>
                   <Link 
-                    href={`/categories/${item.toLowerCase().replace(' ', '-')}`}
+                    href={`/categories/${item.slug}`}
                     className="text-primary-foreground/80 hover:text-secondary transition-colors"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}

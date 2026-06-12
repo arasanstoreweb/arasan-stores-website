@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ShoppingBag, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/lib/cart-context'
+import { useWishlist } from '@/lib/wishlist-context'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -18,6 +19,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { totalItems } = useCart()
+  const { totalItems: wishlistCount, items: wishlistItems } = useWishlist()
+  const wishlistTitle =
+    wishlistCount > 0 ? `Wishlist: ${wishlistItems.map((item) => item.name).join(', ')}` : 'Wishlist'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,13 +67,21 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-2 md:gap-4">
-            <Button 
-              variant="ghost" 
+            <Button
+              asChild
+              variant="ghost"
               size="icon"
-              className="hover:bg-primary/10 hover:text-primary hidden sm:flex"
+              className="relative hover:bg-primary/10 hover:text-primary hidden sm:flex"
             >
-              <Heart className="h-5 w-5" />
-              <span className="sr-only">Wishlist</span>
+              <Link href="/wishlist" className="relative" title={wishlistTitle}>
+                <Heart className="h-5 w-5" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-primary-foreground text-[10px] font-bold flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+                <span className="sr-only">Wishlist</span>
+              </Link>
             </Button>
             <Link href="/cart">
               <Button 

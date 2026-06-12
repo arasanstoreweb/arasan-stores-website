@@ -33,7 +33,7 @@ export default function ProductsPage() {
             All Products
           </h1>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-lg">
-            Browse our complete collection of premium chocolates and traditional sweets.
+            Browse our complete collection of premium chocolates, snacks, jellies, and nostalgic favorites.
           </p>
         </div>
       </section>

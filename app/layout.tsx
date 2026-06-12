@@ -5,6 +5,8 @@ import './globals.css'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { CartProvider } from '@/lib/cart-context'
+import { WishlistProvider } from '@/lib/wishlist-context'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({ 
   subsets: ["latin"],
@@ -20,9 +22,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Arasan Stores | Premium Chocolates & Traditional Sweets',
-  description: 'Crafting Sweet Moments Since Generations. Discover our exquisite collection of premium chocolates, traditional Indian sweets, and luxury gift boxes.',
-  keywords: ['chocolates', 'sweets', 'Indian sweets', 'gift boxes', 'premium', 'luxury'],
+  title: 'Arasan Stores | Premium Chocolates & Traditional Snacks',
+  description: 'Crafting Sweet Moments Since Generations. Discover our exquisite collection of premium chocolates, traditional snacks, nostalgic treats, and joyful indulgences.',
+  keywords: ['chocolates', 'sweets', 'snacks', 'jellies', 'wafer', 'biscuits', 'toys'],
   generator: 'v0.app',
   icons: {
     icon: [
@@ -59,12 +61,15 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable} ${inter.variable} bg-background`}>
       <body className="font-sans antialiased min-h-screen flex flex-col">
         <CartProvider>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <WishlistProvider>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </WishlistProvider>
         </CartProvider>
+        <Toaster />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
