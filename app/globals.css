@@ -170,14 +170,35 @@
   }
 }
 
+@keyframes shine-text {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 150% 0;
+  }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+.animate-shine {
+  background: linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.9), rgba(255,255,255,0.25));
   background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-text 3.5s ease-in-out infinite;
+}
+
+.glass-panel {
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(18px);
+}
+
+.animate-pop {
+  animation: float 4s ease-in-out infinite;
 }
 
 .animate-float {

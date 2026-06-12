@@ -44,7 +44,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   const handleWhatsAppBuy = () => {
     const message = `Hi! I'd like to order:\n\n*${product.name}*\nQuantity: ${quantity}\nPrice: ₹${product.price * quantity}\n\nPlease confirm availability and proceed with the order.`
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/919994897722?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
 
